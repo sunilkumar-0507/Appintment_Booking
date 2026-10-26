@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Page and surface tokens — the whole palette pivots on these. */
+    --surface-page: 250 250 251;
+    --surface-card: 255 255 255;
+    --surface-muted: 246 246 247;
+    --border-subtle: 231 231 233;
+  }
+
+  .dark {
+    --surface-page: 17 17 19;
+    --surface-card: 27 27 30;
+    --surface-muted: 34 34 37;
+    --border-subtle: 44 44 48;
+  }
+
+  * {
+    border-color: rgb(var(--border-subtle));
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-[rgb(var(--surface-page))] font-sans text-ink-900 antialiased dark:text-ink-100;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-[-0.015em];
+  }
+
+  /* Keyboard focus is always visible; pointer focus never draws a ring. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold-400/70 ring-offset-2 ring-offset-[rgb(var(--surface-page))];
+  }
+
+  ::selection {
+    @apply bg-gold-300/40;
+  }
+
+  /* Slim, unobtrusive scrollbars that respect the theme. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[3px] border-solid border-transparent bg-ink-300/60 bg-clip-content dark:bg-ink-600/70;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-400/80 dark:bg-ink-500;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply rounded-2xl border border-ink-200/70 bg-[rgb(var(--surface-card))] shadow-card dark:border-white/[0.07];
+  }
+
+  .surface-muted {
+    @apply bg-[rgb(var(--surface-muted))];
+  }
+
+  /* Shimmering placeholder used by every skeleton component. */
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-ink-200/60 dark:bg-white/[0.06];
+  }
+
+  .skeleton::after {
+    @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-white/[0.05];
+    content: '';
+  }
+
+  /* Hides scrollbars on horizontally scrolling filter rails. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
